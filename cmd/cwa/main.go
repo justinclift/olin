@@ -104,13 +104,11 @@ func main() {
 		log.Fatalf("%s: vm error: %v", fname, err)
 	}
 	if *vmStats || *doTest {
-		log.Printf("reading file time: %s", readingFileTime)
-		log.Printf("vm init time:      %s", vmInitTime)
-		log.Printf("vm gas limit:      %v", *gas)
-		log.Printf("vm gas used:       %v", vm.Gas)
-		log.Printf("vm gas percentage: %v", float64(float64(vm.Gas)/float64(*gas))*100)
-		log.Printf("vm syscalls:       %d", p.SyscallCount())
-		log.Printf("execution time:    %s", vmRunTime)
+		log.Printf("reading file time:        %s", readingFileTime)
+		log.Printf("vm init time:             %s", vmInitTime)
+		log.Printf("vm instructions executed: %v", vm.Gas)
+		log.Printf("vm syscalls:              %d", p.SyscallCount())
+		log.Printf("execution time:           %s", vmRunTime)
 	}
 
 	if ret != 0 {
@@ -118,7 +116,7 @@ func main() {
 	}
 
 	if *vmStats {
-		log.Printf("memory pages:      %d", len(vm.Memory)/65536)
+		log.Printf("memory pages:             %d", len(vm.Memory)/65536)
 	}
 
 	if fname := *writeMem; fname != "" {
@@ -145,7 +143,7 @@ func runCWA(p *cwa.Process, vm *exec.VirtualMachine) (int32, error) {
 		log.Printf("executing %s (%d)", *mainFunc, main)
 	}
 
-	ret, err := vm.RunWithGasLimit(main, *gas)
+	ret, err := vm.Run(main)
 	if err != nil {
 		return 1, err
 	}
@@ -167,12 +165,12 @@ func runGo(w *wasmgo.WasmGo, vm *exec.VirtualMachine) (int32, error) {
 		panic("function not found: resume")
 	}
 
-	if _, err := vm.RunWithGasLimit(run, *gas, 0, 0); err != nil {
+	if _, err := vm.Run(run, 0, 0); err != nil {
 		return 1, err
 	}
 
 	for !vm.Exited {
-		if _, err := vm.RunWithGasLimit(resume, *gas); err != nil {
+		if _, err := vm.Run(resume); err != nil {
 			return w.StatusCode, err
 		}
 	}

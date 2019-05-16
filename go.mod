@@ -10,3 +10,5 @@ require (
 	github.com/prometheus/client_golang v0.9.2
 	within.website/ln v0.5.2
 )
+
+replace github.com/perlin-network/life => /home/jc/gohack/github.com/perlin-network/life
