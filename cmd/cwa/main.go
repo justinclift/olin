@@ -106,7 +106,6 @@ func main() {
 	if *vmStats || *doTest {
 		log.Printf("reading file time:        %s", readingFileTime)
 		log.Printf("vm init time:             %s", vmInitTime)
-		log.Printf("vm instructions executed: %v", vm.Gas)
 		log.Printf("vm syscalls:              %d", p.SyscallCount())
 		log.Printf("execution time:           %s", vmRunTime)
 	}
