@@ -18,10 +18,8 @@ import (
 var (
 	minPages   = flag.Int("min-pages", 32, "number of memory pages to open (default is 2 MB)")
 	mainFunc   = flag.String("main-func", "cwa_main", "main function to call (because rust is broken)")
-	jitEnabled = flag.Bool("jit-enabled", false, "enable jit?")
 	doTest     = flag.Bool("test", false, "unit testing?")
 	vmStats    = flag.Bool("vm-stats", false, "dump VM statistics?")
-	gas        = flag.Int("gas", 65536*64, "number of instructions the VM can perform")
 	goMode     = flag.Bool("go", false, "run in Go mode?")
 	writeMem   = flag.String("write-mem", "", "write memory heap to the given file on exit")
 )
@@ -80,7 +78,6 @@ func main() {
 	}
 
 	cfg := exec.VMConfig{
-		EnableJIT:          *jitEnabled,
 		DefaultMemoryPages: *minPages,
 	}
 
@@ -116,8 +113,8 @@ func main() {
 		log.Printf("memory pages:             %d", len(vm.Memory)/65536)
 	}
 
-	if fname := *writeMem; fname != "" {
-		err := ioutil.WriteFile(fname, vm.Memory, 0600)
+	if memFilename := *writeMem; memFilename != "" {
+		err := ioutil.WriteFile(memFilename, vm.Memory, 0600)
 		if err != nil {
 			log.Fatal(err)
 		}
