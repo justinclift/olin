@@ -12,7 +12,6 @@ import (
 
 	"github.com/Xe/olin/internal/abi/cwa"
 	"github.com/Xe/olin/internal/abi/wasmgo"
-	"github.com/perlin-network/life/compiler"
 	"github.com/perlin-network/life/exec"
 )
 
@@ -85,9 +84,8 @@ func main() {
 		DefaultMemoryPages: *minPages,
 	}
 
-	gp := &compiler.SimpleGasPolicy{GasPerInstruction: 1}
 	t0 = time.Now()
-	vm, err := exec.NewVirtualMachine(data, cfg, p, gp)
+	vm, err := exec.NewVirtualMachine(data, cfg, p, nil)
 	vmInitTime := time.Since(t0)
 	if err != nil {
 		log.Fatalf("%s: %v", fname, err)
