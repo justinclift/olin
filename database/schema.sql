@@ -80,10 +80,12 @@ CREATE TABLE public.execution_run (
     to_global bigint,
     result_int bigint,
     base_value bigint,
-    num_shift_or_rotate_bits integer,
+    modifier_value integer,
     arg_1 bigint,
     arg_2 bigint,
-    arg_3 bigint
+    arg_3 bigint,
+    target bigint,
+    condition bigint
 );
 
 
