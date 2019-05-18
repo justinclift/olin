@@ -68,11 +68,22 @@ CREATE TABLE public.execution_run (
     operands text,
     called_func integer,
     data_int1 bigint,
-    result_register integer,
+    to_register integer,
     arg_count integer,
     result_value bigint,
     op_code integer,
-    memory_address bigint
+    memory_address bigint,
+    frame_ip bigint,
+    local_id integer,
+    from_register integer,
+    from_global bigint,
+    to_global bigint,
+    result_int bigint,
+    base_value bigint,
+    num_shift_or_rotate_bits integer,
+    arg_1 bigint,
+    arg_2 bigint,
+    arg_3 bigint
 );
 
 
