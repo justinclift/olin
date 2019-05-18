@@ -78,7 +78,6 @@ CREATE TABLE public.execution_run (
     from_register integer,
     from_global bigint,
     to_global bigint,
-    result_int bigint,
     base_value bigint,
     modifier_value integer,
     arg_1 bigint,
