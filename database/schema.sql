@@ -96,6 +96,18 @@ ALTER SEQUENCE public.execution_run_op_num_seq OWNED BY public.execution_run.op_
 
 
 --
+-- Name: execution_runs_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.execution_runs_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
 -- Name: execution_run op_num; Type: DEFAULT; Schema: public; Owner: -
 --
 
