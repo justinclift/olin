@@ -1,6 +1,6 @@
 module github.com/Xe/olin
 
-replace github.com/go-interpreter/wagon v0.0.0 => github.com/perlin-network/wagon v0.3.1-0.20180825141017-f8cb99b55a39
+replace github.com/go-interpreter/wagon => /home/jc/gohack/github.com/go-interpreter/wagon // was github.com/go-interpreter/wagon v0.0.0 => github.com/perlin-network/wagon v0.3.1-0.20180825141017-f8cb99b55a39
 
 require (
 	github.com/google/uuid v1.0.0 // indirect
