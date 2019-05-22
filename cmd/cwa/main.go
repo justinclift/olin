@@ -80,6 +80,7 @@ func main() {
 
 	cfg := exec.VMConfig{
 		DefaultMemoryPages: *minPages,
+		DoOpLogging:        false,
 		PGConfig: pgx.ConnConfig{
 			Host:      "/tmp",
 			User:      "jc",
