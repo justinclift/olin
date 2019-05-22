@@ -12,16 +12,17 @@ import (
 
 	"github.com/Xe/olin/internal/abi/cwa"
 	"github.com/Xe/olin/internal/abi/wasmgo"
+	"github.com/jackc/pgx"
 	"github.com/perlin-network/life/exec"
 )
 
 var (
-	minPages   = flag.Int("min-pages", 32, "number of memory pages to open (default is 2 MB)")
-	mainFunc   = flag.String("main-func", "cwa_main", "main function to call (because rust is broken)")
-	doTest     = flag.Bool("test", false, "unit testing?")
-	vmStats    = flag.Bool("vm-stats", false, "dump VM statistics?")
-	goMode     = flag.Bool("go", false, "run in Go mode?")
-	writeMem   = flag.String("write-mem", "", "write memory heap to the given file on exit")
+	minPages = flag.Int("min-pages", 32, "number of memory pages to open (default is 2 MB)")
+	mainFunc = flag.String("main-func", "cwa_main", "main function to call (because rust is broken)")
+	doTest   = flag.Bool("test", false, "unit testing?")
+	vmStats  = flag.Bool("vm-stats", false, "dump VM statistics?")
+	goMode   = flag.Bool("go", false, "run in Go mode?")
+	writeMem = flag.String("write-mem", "", "write memory heap to the given file on exit")
 )
 
 func init() {
@@ -79,6 +80,12 @@ func main() {
 
 	cfg := exec.VMConfig{
 		DefaultMemoryPages: *minPages,
+		PGConfig: pgx.ConnConfig{
+			Host:      "/tmp",
+			User:      "jc",
+			Database:  "olintest",
+			TLSConfig: nil,
+		},
 	}
 
 	t0 = time.Now()
