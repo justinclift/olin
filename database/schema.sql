@@ -66,7 +66,6 @@ CREATE TABLE public.execution_run (
     before_val_int integer,
     after_val_int integer,
     operands text,
-    called_func integer,
     data_int1 bigint,
     to_register integer,
     arg_count integer,
@@ -84,15 +83,30 @@ CREATE TABLE public.execution_run (
     arg_2 bigint,
     arg_3 bigint,
     target bigint,
-    condition bigint
+    condition bigint,
+    function_name text,
+    module_name text
 );
 
 
 --
--- Name: execution_run_op_num_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: execution_run_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.execution_run_op_num_seq
+CREATE TABLE public.execution_run_metadata (
+    meta_id integer NOT NULL,
+    run_num integer,
+    function_name text,
+    function_num integer
+);
+
+
+--
+-- Name: execution_run_metadata_meta_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.execution_run_metadata_meta_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -101,10 +115,10 @@ CREATE SEQUENCE public.execution_run_op_num_seq
 
 
 --
--- Name: execution_run_op_num_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: execution_run_metadata_meta_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.execution_run_op_num_seq OWNED BY public.execution_run.op_num;
+ALTER SEQUENCE public.execution_run_metadata_meta_id_seq OWNED BY public.execution_run_metadata.meta_id;
 
 
 --
@@ -120,18 +134,10 @@ CREATE SEQUENCE public.execution_runs_seq
 
 
 --
--- Name: execution_run op_num; Type: DEFAULT; Schema: public; Owner: -
+-- Name: execution_run_metadata meta_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.execution_run ALTER COLUMN op_num SET DEFAULT nextval('public.execution_run_op_num_seq'::regclass);
-
-
---
--- Name: execution_run execution_run_pk; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.execution_run
-    ADD CONSTRAINT execution_run_pk PRIMARY KEY (op_num);
+ALTER TABLE ONLY public.execution_run_metadata ALTER COLUMN meta_id SET DEFAULT nextval('public.execution_run_metadata_meta_id_seq'::regclass);
 
 
 --
